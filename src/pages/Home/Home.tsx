@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CountriesListWrapper,
   HomeContainer,
   SearchCountryInput,
 } from "./style";
+import API from "../../services/api";
 
 const Home = () => {
   const [countries, setCountries] = useState([]);
@@ -13,6 +14,23 @@ const Home = () => {
   const handleChangeInputSearchValue = (value: string) => {
     setInputSearchValue(value);
   };
+
+  const getCountries = async () => {
+    try {
+      await API.get('/countries')
+      .then((response) => {
+        if(response.status === 200) {
+          setCountries(response.data);
+        }
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getCountries();
+  }, [])
 
   return (
     <HomeContainer>
