@@ -66,6 +66,12 @@ const Country = () => {
           setCountryFlagURL(response.data);
         }
       });
+      await API.get(`/countries/population/${countryFlagURL.iso3}`)
+      .then((response) => {
+        if(response.status === 200) {
+            setCountryPopulation(response.data);
+        }
+      })
       await API.get(``);
     } catch (error) {
       console.log(error);
