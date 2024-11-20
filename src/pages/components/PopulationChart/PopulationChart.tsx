@@ -13,6 +13,7 @@ const PopulationChart = ({
   populationData: PopulationData[];
 }) => {
   const option = {
+    width: "100%",
     xAxis: {
       type: "category",
       data: populationData.map((value) => value.year),

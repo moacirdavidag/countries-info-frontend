@@ -21,6 +21,12 @@ export const SearchInputDivWrapper = styled.div`
     width: 20px;
     height: auto;
   }
+  @media screen and (max-width: 480px) {
+    width: 90%;
+  }
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    width: 60%;
+  }
 `;
 
 export const SearchCountryInput = styled.input`
@@ -54,6 +60,12 @@ export const CountriesListWrapper = styled.div`
         height: auto;
         cursor: pointer;
     }
+  }
+  @media screen and (max-width: 480px) {
+    width: 90%;
+  }
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    width: 60%;
   }
 `;
 

@@ -29,6 +29,9 @@ export const TopBackComponent = styled.div`
     width: 30px;
     height: auto;
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const CountryInfoWrapper = styled.div`
@@ -39,6 +42,13 @@ export const CountryInfoWrapper = styled.div`
   flex-direction: column;
   gap: 12px;
   border: 1px solid #cecece;
+  @media screen and (max-width: 420px) {
+    width: 100%;
+    padding: 8px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Row = styled.div<RowProps>`
