@@ -9,19 +9,35 @@ import {
 import API from "../../services/api";
 import searchIconSVG from "../../assets/ico/search-ico.svg";
 import infoIconSVG from "../../assets/ico/info-circle.svg";
+import { useNavigate } from "react-router-dom";
 
 type Country = {
   name: string;
-  code: string;
+  countryCode: string;
 };
 
 const Home = () => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [countriesFiltered, setCountriesFiltered] = useState<Country[]>([]);
   const [inputSearchValue, setInputSearchValue] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleChangeInputSearchValue = (value: string) => {
     setInputSearchValue(value);
+    handleFilterCountries(value);
+  };
+
+  const handleFilterCountries = (value: string) => {
+    if (countries && countries.length > 0) {
+      const findedCountries = countries.filter((country) =>
+        country.name.toLowerCase().includes(value.toLowerCase())
+      );
+      setCountriesFiltered(findedCountries);
+    }
+  };
+
+  const handleNavigateToCountryPage = (code: string) => {
+    navigate(`/country/${code}`);
   };
 
   const getCountries = async () => {
@@ -57,22 +73,46 @@ const Home = () => {
       </SearchInputDivWrapper>
 
       <CountriesListWrapper>
-        {countries && countries?.length > 0 ? (
+        {countriesFiltered && countriesFiltered.length > 0 ? (
+          countriesFiltered.map((country) => (
+            <div>
+              <span>{country.name}</span>
+              <span>
+                {" "}
+                <img
+                  src={infoIconSVG}
+                  alt="Country info icon"
+                  onClick={() => {
+                    handleNavigateToCountryPage(country.countryCode);
+                  }}
+                />
+              </span>
+            </div>
+          ))
+        ) : countries && countries?.length > 0 ? (
           countries.map((country) => (
             <div>
               <span>{country.name}</span>
               <span>
                 {" "}
-                <img src={infoIconSVG} alt="Country info icon" />
+                <img src={infoIconSVG} alt="Country info icon" onClick={() => {
+                  handleNavigateToCountryPage(country.countryCode)
+                }} />
               </span>
             </div>
           ))
         ) : (
-          <p>No country finded.</p>
+          <p>No results for {inputSearchValue}</p>
         )}
       </CountriesListWrapper>
       <HomeFooter>
-        Developed with &#10084; by <a href='https://www.linkedin.com/in/moacir-david-7735b7158/' target="_blank">Moacir David</a>
+        Developed with &#10084; by{" "}
+        <a
+          href="https://www.linkedin.com/in/moacir-david-7735b7158/"
+          target="_blank"
+        >
+          Moacir David
+        </a>
       </HomeFooter>
     </HomeContainer>
   );
